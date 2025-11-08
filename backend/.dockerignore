@@ -1,11 +1,56 @@
+# Dependencies
 node_modules
+npm-debug.log
+yarn-error.log
+
+# Build outputs
 dist
 coverage
+*.log
+
+# Environment files
 .env
 .env.local
-*.log
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
 .git
 .gitignore
-README.md
-.DS_Store
+
+# Test files
+*.test.ts
+*.spec.ts
+test
+tests
+__tests__
+
+# Documentation
+*.md
+!README.md
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Fly.io
+fly.toml
+
+# Scripts de teste
+scripts/test-*
 

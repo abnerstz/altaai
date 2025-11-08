@@ -1,11 +1,14 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 WORKDIR /app
+
+# Install OpenSSL and other dependencies required by Prisma
+RUN apk add --no-cache openssl openssl-dev
 
 # Copy package files
 COPY package.json yarn.lock* ./
 
-# Install dependencies
+# Install all dependencies (including devDependencies for build)
 RUN yarn install --frozen-lockfile
 
 # Copy Prisma schema first
@@ -18,20 +21,32 @@ RUN ./node_modules/.bin/prisma generate
 COPY . .
 
 # Build application
-RUN npx nest build
+RUN yarn build
 
 # Production stage
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 WORKDIR /app
+
+# Install OpenSSL and build dependencies required by Prisma and native modules
+RUN apk add --no-cache openssl openssl-dev python3 make g++
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nestjs -u 1001
 
-COPY --from=base --chown=nestjs:nodejs /app/node_modules ./node_modules
-COPY --from=base --chown=nestjs:nodejs /app/dist ./dist
+# Copy package files
 COPY --from=base --chown=nestjs:nodejs /app/package.json ./
+COPY --from=base --chown=nestjs:nodejs /app/yarn.lock* ./
+
+# Copy Prisma schema
 COPY --from=base --chown=nestjs:nodejs /app/prisma ./prisma
+
+# Install only production dependencies and rebuild native modules
+RUN yarn install --frozen-lockfile --production && \
+    chown -R nestjs:nodejs /app
+
+# Copy built application and Prisma client
+COPY --from=base --chown=nestjs:nodejs /app/dist ./dist
 COPY --from=base --chown=nestjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
 
 USER nestjs

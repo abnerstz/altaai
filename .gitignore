@@ -39,4 +39,6 @@ docker-compose.override.yml
 .cache/
 
 # Deploy
-.vercel
+.fly/
+flyctl
+
