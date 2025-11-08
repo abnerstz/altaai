@@ -105,21 +105,21 @@ async function main() {
       data: {
         name: 'Tech Solutions',
         slug: 'tech-solutions',
-        logo: 'https://via.placeholder.com/150',
+        logo: 'https://logo.clearbit.com/google.com',
       },
     }),
     prisma.company.create({
       data: {
         name: 'Digital Innovations',
         slug: 'digital-innovations',
-        logo: 'https://via.placeholder.com/150',
+        logo: 'https://logo.clearbit.com/microsoft.com',
       },
     }),
     prisma.company.create({
       data: {
         name: 'Startup Hub',
         slug: 'startup-hub',
-        logo: 'https://via.placeholder.com/150',
+        logo: 'https://logo.clearbit.com/apple.com',
       },
     }),
   ]);
