@@ -29,19 +29,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
         typeof exceptionResponse === 'string'
           ? exceptionResponse
           : (exceptionResponse as any).message || message;
-      details =
-        typeof exceptionResponse === 'object'
-          ? (exceptionResponse as any)
-          : null;
+      details = typeof exceptionResponse === 'object' ? (exceptionResponse as any) : null;
     } else if (exception instanceof PrismaClientKnownRequestError) {
       status = this.handlePrismaError(exception);
       message = this.getPrismaErrorMessage(exception);
     } else if (exception instanceof Error) {
       message = exception.message;
-      this.logger.error(
-        `Unhandled error: ${exception.message}`,
-        exception.stack,
-      );
+      this.logger.error(`Unhandled error: ${exception.message}`, exception.stack);
     }
 
     const errorResponse: any = {
@@ -58,7 +52,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     this.logger.error(
       `${request.method} ${request.url} - ${status} - ${message}`,
-      exception instanceof Error ? exception.stack : JSON.stringify(exception),
+      exception instanceof Error ? exception.stack : JSON.stringify(exception)
     );
 
     response.status(status).json(errorResponse);
@@ -94,4 +88,3 @@ export class AllExceptionsFilter implements ExceptionFilter {
     }
   }
 }
-

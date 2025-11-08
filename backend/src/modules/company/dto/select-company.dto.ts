@@ -7,4 +7,3 @@ export class SelectCompanyDto {
   @IsNotEmpty({ message: 'Company ID é obrigatório' })
   companyId: string;
 }
-

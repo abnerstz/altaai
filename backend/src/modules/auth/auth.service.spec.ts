@@ -224,7 +224,9 @@ describe('AuthService', () => {
           user: {
             findUnique: jest.fn().mockResolvedValue(null),
             create: jest.fn().mockResolvedValue(mockNewUser),
-            update: jest.fn().mockResolvedValue({ ...mockNewUser, activeCompanyId: mockInvite.companyId }),
+            update: jest
+              .fn()
+              .mockResolvedValue({ ...mockNewUser, activeCompanyId: mockInvite.companyId }),
           },
           membership: {
             findUnique: jest.fn(),
@@ -262,7 +264,9 @@ describe('AuthService', () => {
           },
           user: {
             findUnique: jest.fn().mockResolvedValue(mockExistingUser),
-            update: jest.fn().mockResolvedValue({ ...mockExistingUser, activeCompanyId: mockInvite.companyId }),
+            update: jest
+              .fn()
+              .mockResolvedValue({ ...mockExistingUser, activeCompanyId: mockInvite.companyId }),
           },
           membership: {
             findUnique: jest.fn().mockResolvedValue(null),
@@ -352,7 +356,9 @@ describe('AuthService', () => {
       });
 
       await expect(service.acceptInvite(acceptInviteDto)).rejects.toThrow(BadRequestException);
-      await expect(service.acceptInvite(acceptInviteDto)).rejects.toThrow('Você já é membro desta empresa');
+      await expect(service.acceptInvite(acceptInviteDto)).rejects.toThrow(
+        'Você já é membro desta empresa'
+      );
     });
 
     it('deve lançar BadRequestException se senha não fornecida para novo usuário', async () => {
@@ -368,8 +374,12 @@ describe('AuthService', () => {
         return callback(mockPrisma);
       });
 
-      await expect(service.acceptInvite({ ...acceptInviteDto, password: undefined })).rejects.toThrow(BadRequestException);
-      await expect(service.acceptInvite({ ...acceptInviteDto, password: undefined })).rejects.toThrow('Senha é obrigatória para novos usuários');
+      await expect(
+        service.acceptInvite({ ...acceptInviteDto, password: undefined })
+      ).rejects.toThrow(BadRequestException);
+      await expect(
+        service.acceptInvite({ ...acceptInviteDto, password: undefined })
+      ).rejects.toThrow('Senha é obrigatória para novos usuários');
     });
   });
 
@@ -431,4 +441,3 @@ describe('AuthService', () => {
     });
   });
 });
-

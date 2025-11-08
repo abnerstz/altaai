@@ -102,8 +102,12 @@ describe('MembershipService', () => {
 
       mockPrismaService.membership.findUnique.mockResolvedValue(requesterMembership);
 
-      await expect(service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId)).rejects.toThrow(ForbiddenException);
-      await expect(service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId)).rejects.toThrow('Apenas OWNER e ADMIN podem alterar papéis');
+      await expect(
+        service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId)
+      ).rejects.toThrow(ForbiddenException);
+      await expect(
+        service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId)
+      ).rejects.toThrow('Apenas OWNER e ADMIN podem alterar papéis');
     });
 
     it('deve lançar ForbiddenException se ADMIN tenta alterar OWNER', async () => {
@@ -125,7 +129,7 @@ describe('MembershipService', () => {
         .mockResolvedValueOnce(targetMembership);
 
       const result = service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId);
-      
+
       await expect(result).rejects.toThrow(ForbiddenException);
       await expect(result).rejects.toThrow('ADMIN não pode alterar papel de OWNER');
     });
@@ -150,7 +154,7 @@ describe('MembershipService', () => {
       mockPrismaService.membership.count.mockResolvedValue(1);
 
       const result = service.updateRole(companyId, targetUserId, Role.ADMIN, requesterId);
-      
+
       await expect(result).rejects.toThrow(BadRequestException);
       await expect(result).rejects.toThrow('Empresa deve ter pelo menos um OWNER');
     });
@@ -243,7 +247,7 @@ describe('MembershipService', () => {
         .mockResolvedValueOnce(targetMembership);
 
       const result = service.remove(companyId, targetUserId, requesterId);
-      
+
       await expect(result).rejects.toThrow(ForbiddenException);
       await expect(result).rejects.toThrow('ADMIN não pode remover OWNER');
     });
@@ -268,10 +272,9 @@ describe('MembershipService', () => {
       mockPrismaService.membership.count.mockResolvedValue(1);
 
       const result = service.remove(companyId, targetUserId, requesterId);
-      
+
       await expect(result).rejects.toThrow(BadRequestException);
       await expect(result).rejects.toThrow('Empresa deve ter pelo menos um OWNER');
     });
   });
 });
-

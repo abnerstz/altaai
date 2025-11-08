@@ -94,4 +94,3 @@ export class CompanyController {
     return this.companyService.selectCompany(id, user.id);
   }
 }
-

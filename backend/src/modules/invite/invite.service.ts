@@ -17,7 +17,7 @@ export class InviteService {
 
   constructor(
     private prisma: PrismaService,
-    private emailService: EmailService,
+    private emailService: EmailService
   ) {}
 
   async create(companyId: string, userId: string, createInviteDto: CreateInviteDto) {
@@ -303,4 +303,3 @@ export class InviteService {
     return { message: 'Convite recusado com sucesso' };
   }
 }
-

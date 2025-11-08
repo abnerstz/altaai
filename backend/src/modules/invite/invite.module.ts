@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
-import { InviteController, InviteDeleteController, PublicInviteController } from './invite.controller';
+import {
+  InviteController,
+  InviteDeleteController,
+  PublicInviteController,
+} from './invite.controller';
 import { InviteService } from './invite.service';
 import { EmailModule } from '../email/email.module';
 
@@ -10,4 +14,3 @@ import { EmailModule } from '../email/email.module';
   exports: [InviteService],
 })
 export class InviteModule {}
-

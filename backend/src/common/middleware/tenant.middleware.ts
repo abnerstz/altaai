@@ -37,4 +37,3 @@ export class TenantMiddleware implements NestMiddleware {
     next();
   }
 }
-

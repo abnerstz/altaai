@@ -37,21 +37,13 @@ export class MembershipService {
           },
         },
       },
-      orderBy: [
-        { role: 'asc' },
-        { joinedAt: 'asc' },
-      ],
+      orderBy: [{ role: 'asc' }, { joinedAt: 'asc' }],
     });
 
     return members;
   }
 
-  async updateRole(
-    companyId: string,
-    targetUserId: string,
-    newRole: Role,
-    userId: string
-  ) {
+  async updateRole(companyId: string, targetUserId: string, newRole: Role, userId: string) {
     const requesterMembership = await this.prisma.membership.findUnique({
       where: {
         userId_companyId: {
@@ -193,4 +185,3 @@ export class MembershipService {
     return { message: 'Membro removido com sucesso' };
   }
 }
-

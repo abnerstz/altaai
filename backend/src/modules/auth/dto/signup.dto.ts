@@ -15,14 +15,10 @@ export class SignupDto {
   @ApiProperty({ example: 'SenhaSegura123!', minLength: 8 })
   @IsString({ message: 'Senha deve ser uma string' })
   @MinLength(8, { message: 'Senha deve ter no mínimo 8 caracteres' })
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-    {
-      message:
-        'Senha deve conter pelo menos: 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial',
-    },
-  )
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, {
+    message:
+      'Senha deve conter pelo menos: 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial',
+  })
   @IsNotEmpty({ message: 'Senha é obrigatória' })
   password: string;
 }
-

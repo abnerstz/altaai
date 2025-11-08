@@ -13,4 +13,3 @@ export class CreateInviteDto {
   @IsNotEmpty({ message: 'Papel é obrigatório' })
   role: Role;
 }
-

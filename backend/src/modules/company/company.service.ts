@@ -194,9 +194,7 @@ export class CompanyService {
       return { message: 'Empresa deletada com sucesso' };
     }
 
-    throw new BadRequestException(
-      'Não é possível deletar a empresa. Existem outros OWNERs.'
-    );
+    throw new BadRequestException('Não é possível deletar a empresa. Existem outros OWNERs.');
   }
 
   async selectCompany(id: string, userId: string) {
@@ -221,4 +219,3 @@ export class CompanyService {
     return { message: 'Empresa selecionada com sucesso' };
   }
 }
-

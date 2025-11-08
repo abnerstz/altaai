@@ -98,4 +98,3 @@ export class InviteDeleteController {
     return this.inviteService.remove(id, user.id);
   }
 }
-

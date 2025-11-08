@@ -13,4 +13,3 @@ export class CreateCompanyDto {
   @IsOptional()
   logo?: string;
 }
-

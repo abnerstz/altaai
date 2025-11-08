@@ -13,4 +13,3 @@ export class UpdateCompanyDto {
   @IsOptional()
   logo?: string;
 }
-

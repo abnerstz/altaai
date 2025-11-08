@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Res,
-  HttpCode,
-  HttpStatus,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Res, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { Response } from 'express';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -39,8 +30,8 @@ export class AuthController {
 
     res.cookie('access_token', result.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -59,8 +50,8 @@ export class AuthController {
 
     res.cookie('access_token', result.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true, // Sempre true em produção para sameSite: 'none'
+      sameSite: 'none', // Necessário para requisições cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -73,7 +64,11 @@ export class AuthController {
   @ApiOperation({ summary: 'Fazer logout' })
   @ApiResponse({ status: 200, description: 'Logout realizado com sucesso' })
   async logout(@Res() res: Response) {
-    res.clearCookie('access_token');
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
     return res.json({ message: 'Logout realizado com sucesso' });
   }
 
@@ -88,8 +83,8 @@ export class AuthController {
 
     res.cookie('access_token', result.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true, // Sempre true em produção para sameSite: 'none'
+      sameSite: 'none', // Necessário para requisições cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -105,4 +100,3 @@ export class AuthController {
     return this.authService.getMe(user.id);
   }
 }
-

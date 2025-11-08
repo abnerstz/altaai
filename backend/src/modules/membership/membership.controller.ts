@@ -62,4 +62,3 @@ export class MembershipController {
     return this.membershipService.remove(companyId, userId, user.id);
   }
 }
-

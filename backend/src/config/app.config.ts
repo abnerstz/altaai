@@ -18,4 +18,3 @@ export const appConfig = () => ({
     from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
   },
 });
-

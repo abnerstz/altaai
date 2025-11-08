@@ -139,7 +139,9 @@ describe('CompanyService', () => {
       mockPrismaService.membership.findUnique.mockResolvedValue(null);
 
       await expect(service.findOne(companyId, userId)).rejects.toThrow(ForbiddenException);
-      await expect(service.findOne(companyId, userId)).rejects.toThrow('Você não é membro desta empresa');
+      await expect(service.findOne(companyId, userId)).rejects.toThrow(
+        'Você não é membro desta empresa'
+      );
     });
 
     it('deve lançar NotFoundException se empresa não existe', async () => {
@@ -214,8 +216,12 @@ describe('CompanyService', () => {
 
       mockPrismaService.membership.findUnique.mockResolvedValue(mockMembership);
 
-      await expect(service.update(companyId, userId, updateCompanyDto)).rejects.toThrow(ForbiddenException);
-      await expect(service.update(companyId, userId, updateCompanyDto)).rejects.toThrow('Apenas OWNER e ADMIN podem editar a empresa');
+      await expect(service.update(companyId, userId, updateCompanyDto)).rejects.toThrow(
+        ForbiddenException
+      );
+      await expect(service.update(companyId, userId, updateCompanyDto)).rejects.toThrow(
+        'Apenas OWNER e ADMIN podem editar a empresa'
+      );
     });
   });
 
@@ -255,7 +261,9 @@ describe('CompanyService', () => {
       mockPrismaService.membership.count.mockResolvedValue(2);
 
       await expect(service.remove(companyId, userId)).rejects.toThrow(BadRequestException);
-      await expect(service.remove(companyId, userId)).rejects.toThrow('Não é possível deletar a empresa. Existem outros OWNERs.');
+      await expect(service.remove(companyId, userId)).rejects.toThrow(
+        'Não é possível deletar a empresa. Existem outros OWNERs.'
+      );
     });
 
     it('deve lançar ForbiddenException se usuário não é OWNER', async () => {
@@ -269,8 +277,9 @@ describe('CompanyService', () => {
       mockPrismaService.membership.findUnique.mockResolvedValue(mockMembership);
 
       await expect(service.remove(companyId, userId)).rejects.toThrow(ForbiddenException);
-      await expect(service.remove(companyId, userId)).rejects.toThrow('Apenas OWNER pode deletar a empresa');
+      await expect(service.remove(companyId, userId)).rejects.toThrow(
+        'Apenas OWNER pode deletar a empresa'
+      );
     });
   });
 });
-

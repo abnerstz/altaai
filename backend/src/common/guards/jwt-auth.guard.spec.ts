@@ -44,7 +44,10 @@ describe('JwtAuthGuard', () => {
 
     it('deve chamar super.canActivate se rota não é pública', () => {
       mockReflector.getAllAndOverride.mockReturnValue(false);
-      const superCanActivate = jest.spyOn(Object.getPrototypeOf(JwtAuthGuard.prototype), 'canActivate');
+      const superCanActivate = jest.spyOn(
+        Object.getPrototypeOf(JwtAuthGuard.prototype),
+        'canActivate'
+      );
       superCanActivate.mockReturnValue(true);
 
       guard.canActivate(mockContext);
@@ -74,4 +77,3 @@ describe('JwtAuthGuard', () => {
     });
   });
 });
-
