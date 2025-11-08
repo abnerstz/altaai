@@ -1,0 +1,22 @@
+{
+  "name": "altaai-platform",
+  "version": "1.0.0",
+  "description": "Plataforma Multi-Tenant Altaa.ai",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "cd backend && yarn dev",
+    "dev:frontend": "cd frontend && yarn dev",
+    "build:backend": "cd backend && yarn build",
+    "build:frontend": "cd frontend && yarn build",
+    "test:backend": "cd backend && yarn test",
+    "test:frontend": "cd frontend && yarn test"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  }
+}
+

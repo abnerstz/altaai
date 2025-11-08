@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String       @id @default(uuid())
+  email           String       @unique
+  name            String
+  password        String
+  avatar          String?
+  activeCompanyId String?
+  activeCompany   Company?     @relation("ActiveCompany", fields: [activeCompanyId], references: [id])
+  memberships     Membership[]
+  invitesSent     Invite[]     @relation("InviteSender")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([email])
+}
+
+model Company {
+  id          String       @id @default(uuid())
+  name        String
+  logo        String?
+  slug        String       @unique
+  memberships Membership[]
+  invites     Invite[]
+  activeUsers User[]       @relation("ActiveCompany")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([slug])
+}
+
+model Membership {
+  id        String   @id @default(uuid())
+  role      Role     @default(MEMBER)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
+}
+
+model Invite {
+  id         String    @id @default(uuid())
+  email      String
+  token      String    @unique
+  role       Role      @default(MEMBER)
+  companyId  String
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     User      @relation("InviteSender", fields: [senderId], references: [id])
+  expiresAt  DateTime
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@unique([email, companyId])
+  @@index([token])
+  @@index([email])
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+}
